@@ -1,0 +1,179 @@
+<DOCTYPE! html>
+    <html ng-app="myApp">
+    <head>
+    <title>CRUD ANGULARJS</title>  
+    <script type="text/javascript" src="angular.min.js"></script>
+            
+    </head>
+    <body ng-controller="userController">
+        <table cellpadding="2" cellspacing="2" border="2">
+         <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Mobile</th>
+        <th>College</th>
+        <th>Options</th>
+        
+        </tr>
+            
+        <tr ng-repeat="user in listUsers">
+            <td>{{user.id}}</td>
+            <td>{{user.name}}</td>
+            <td>{{user.email}}</td>
+            <td>{{user.mobile}}</td>
+            <td>{{user.college}}</td>
+            <td>
+                <a href="#" ng-click="del(user.id)">DELETE</a>
+                <a href="#" ng-click="selectEdit(user.id)">EDIT</a>
+            </td>
+                           
+        </tr>
+            
+        </table>
+        
+        <h2>User Information</h2>
+        <table cellspacing ="2" cellpadding="2">
+        <tr>
+        <td>ID</td>
+            <td><input type="text" ng-model="id"></td>
+         </tr>
+         <tr>
+        <td>Name</td>
+            <td><input type="text" ng-model="name"></td>
+        </tr>
+        <tr>
+        <td>Email</td>
+            <td><input type="text" ng-model="email"></td>
+        </tr>
+        <tr>
+        <td>Mobile</td>
+            <td><input type="text" ng-model="mobile"></td>
+        </tr>
+        <tr>
+        <td>College</td>
+            <td><input type="text" ng-model="college"></td>
+            
+        </tr>
+            
+        <tr>
+            <td><input type="button" ng-click="add()" value="Add"></td>
+            
+            <td><input type="button" ng-click="edit()" value="Save"></td>
+            
+        </tr>
+        
+        
+        </table>
+        
+   
+   <script>     
+    var myApp = angular.module('myApp',[]);
+    myApp.controller('userController',function($scope){
+        
+        $scope.listUsers =[
+            
+            {id:"u001" ,name:"Ashish" ,email:"ashishkvs@gmail.com" ,mobile:"7004797675", college:"C V Raman"},
+            
+            {id:"u002" ,name:"Surila" ,email:"smsurila@gmail.com" ,mobile:"7004797675", college:"C V Raman"},
+            
+            {id:"u003" ,name:"Anu" ,email:"anuKashyap@gmail.com" ,mobile:"7004797675", college:"NIT"},
+            
+            {id:"u004" ,name:"Kaju" ,email:"KajuKashyap@gmail.com" ,mobile:"7004797675", college:"Allen"},
+            
+            {id:"u005" ,name:"Newtam" ,email:"NewtamKashyap@gmail.com" ,mobile:"7004797675", college:"Allen"}
+            
+            ];
+        
+        $scope.add = function(){
+            
+            $scope.listUsers.push({
+                
+            id:$scope.id ,name:$scope.name,email:$scope.email ,mobile:$scope.mobile, college:$scope.college    
+                
+            });
+            
+            $scope.id="";
+            $scope.name="";
+            $scope.email="";
+            $scope.mobile="";
+            $scope.college="";
+        };
+        
+         
+        $scope.edit =function(){
+            
+            var index=getSelectedIndex($scope.id);
+           $scope.listUsers[index].name=$scope.name;
+        $scope.listUsers[index].email=$scope.email;
+        $scope.listUsers[index].mobile=$scope.mobile;
+        $scope.listUsers[index].college=$scope.college;
+            
+            
+          $scope.id="";
+            $scope.name="";
+            $scope.email="";
+            $scope.mobile="";
+            $scope.college="";   
+            
+            
+        }
+        
+        
+        
+        $scope.selectEdit = function(id)
+        {
+            var index=getSelectedIndex(id);
+            var user=$scope.listUsers[index];
+            $scope.id=user.id;
+            $scope.name=user.name;
+            $scope.email=user.email;
+            $scope.mobile=user.mobile;
+            $scope.college=user.college;
+       
+            
+            
+            
+        };
+        
+        $scope.del = function(id){
+            var result=confirm("Are you Sure?")
+            if(result===true){
+            var index= getSelectedIndex(id);
+            $scope.listUsers.splice(index,1);
+            }
+        };
+        
+        function getSelectedIndex(id)
+        {
+         for(var i=0; i<$scope.listUsers.length ;i++)
+             if($scope.listUsers[i].id==id)
+                 return i;
+            return -1
+        }
+        
+        
+        
+        
+        
+    });
+    
+   </script>     
+        
+        
+        
+        
+        
+        
+    </body>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    </html>
